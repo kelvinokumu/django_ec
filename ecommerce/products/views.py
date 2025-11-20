@@ -19,3 +19,18 @@ def add_category(request):
 def category_list(request):
     categories = Category.objects.all()
     return render(request,"products/category_list.html",{'categories':categories})
+
+def add_product(request):
+    if request.method == 'POST':
+        form = ProductForm(request.POST)
+        if form.is_valid():
+            form.save()
+            # pass message
+            return redirect("products:add_product")
+    else:
+        form = ProductForm()
+    return render(request,"products/products_form.html",{'form':form})
+
+def product_list(request):
+    products = Product.objects.all()
+    return render(request,"products/products_list.html",{'products':products})
